@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum RecipeStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  REJECTED
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String?
+  imageUrl     String?
+  bio          String?
+  role         UserRole  @default(USER)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  accounts  OAuthAccount[]
+  recipes   Recipe[]
+  favorites Favorite[]
+  comments  Comment[]
+  ratings   Rating[]
+
+  @@map("users")
+}
+
+model OAuthAccount {
+  id                String   @id @default(cuid())
+  provider          String
+  providerAccountId String
+  userId            String
+  createdAt         DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("oauth_accounts")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  recipes Recipe[]
+
+  @@map("categories")
+}
+
+model Recipe {
+  id              String       @id @default(cuid())
+  title           String
+  slug            String       @unique
+  description     String
+  preparation     String
+  prepTimeMinutes Int
+  servings        Int
+  difficulty      Difficulty
+  imageUrl        String?
+  videoUrl        String?
+  nutritionInfo   Json?
+  status          RecipeStatus @default(DRAFT)
+  authorId        String
+  categoryId      String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  publishedAt     DateTime?
+
+  author      User               @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  category    Category           @relation(fields: [categoryId], references: [id])
+  ingredients RecipeIngredient[]
+  favorites   Favorite[]
+  comments    Comment[]
+  ratings     Rating[]
+
+  @@index([authorId])
+  @@index([categoryId])
+  @@index([status])
+  @@map("recipes")
+}
+
+model Ingredient {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  recipes RecipeIngredient[]
+
+  @@map("ingredients")
+}
+
+model RecipeIngredient {
+  id           String  @id @default(cuid())
+  recipeId     String
+  ingredientId String
+  quantity     String
+  notes        String?
+  order        Int
+
+  recipe     Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id])
+
+  @@unique([recipeId, ingredientId, order])
+  @@index([ingredientId])
+  @@map("recipe_ingredients")
+}
+
+model Favorite {
+  userId    String
+  recipeId  String
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, recipeId])
+  @@index([recipeId])
+  @@map("favorites")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  recipeId  String
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe  Recipe    @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentReplies")
+
+  @@index([userId])
+  @@index([recipeId])
+  @@index([parentId])
+  @@map("comments")
+}
+
+model Rating {
+  userId    String
+  recipeId  String
+  score     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, recipeId])
+  @@index([recipeId])
+  @@map("ratings")
+}
