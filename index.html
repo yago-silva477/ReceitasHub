@@ -3,92 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conhecendo Paris</title>
-
-    <!-- CSS interno -->
-    <style>
-        body {
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            color: navy;
-            text-align: center;
-        }
-
-        h2 {
-            color: darkred;
-        }
-
-        img {
-            width: 300px;
-            border-radius: 10px;
-        }
-
-        .destaque {
-            color: white;
-            background-color: rgb(40, 40, 120);
-            padding: 10px;
-        }
-    </style>
+    <title>ReceitasHub - Receitas faceis</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
+    <header class="topo" id="inicio">
+        <div class="container topo-conteudo">
+            <a class="logo" href="#inicio">ReceitasHub</a>
 
-    <!-- Comentário: Página sobre Paris -->
+            <nav class="menu">
+                <a href="#receita-principal">Receita principal</a>
+                <a href="#mais-receitas">Mais receitas</a>
+                <a href="#dicas">Dicas</a>
+            </nav>
+        </div>
+    </header>
 
-    <h1>Paris - A Cidade Luz</h1>
-    <h2>Conheça a capital da França</h2>
-    <h3>Curiosidades sobre Paris</h3>
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-texto">
+                    <span class="etiqueta">Receita em destaque</span>
+                    <h1>Bolo de cenoura fofinho</h1>
+                    <p>
+                        Uma receita simples, caseira e perfeita para o cafe da tarde. Massa macia,
+                        sabor de cenoura na medida certa e cobertura de chocolate cremosa.
+                    </p>
 
-    <p id="inicio">
-        Paris é a capital da <strong>França</strong> e uma das cidades mais famosas do mundo.
-        Conhecida por sua beleza, cultura e história, ela atrai milhões de turistas todos os anos.
-    </p>
+                    <div class="info-lista">
+                        <span>50 min</span>
+                        <span>10 fatias</span>
+                        <span>Facil</span>
+                    </div>
+                </div>
 
-    <p style="color: darkgreen;">
-        A cidade é famosa por monumentos como a <b>Torre Eiffel</b>, o Museu do <i>Louvre</i>
-        e a Catedral de <mark>Notre-Dame</mark>.
-    </p>
+                <img
+                    class="hero-imagem"
+                    src="https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=900&q=80"
+                    alt="Bolo caseiro servido em uma mesa"
+                >
+            </div>
+        </section>
 
-    <p class="destaque">
-        Paris é considerada uma das cidades mais românticas do mundo.
-    </p>
+        <section class="container secao receita-detalhe" id="receita-principal">
+            <article class="painel">
+                <h2>Ingredientes</h2>
 
-    <blockquote>
-        "Paris é sempre uma boa ideia." — Audrey Hepburn
-    </blockquote>
+                <ul>
+                    <li>3 cenouras medias picadas</li>
+                    <li>3 ovos</li>
+                    <li>1 xicara de oleo</li>
+                    <li>2 xicaras de acucar</li>
+                    <li>2 e 1/2 xicaras de farinha de trigo</li>
+                    <li>1 colher de sopa de fermento em po</li>
+                </ul>
+            </article>
 
-    <h2>Principais pontos turísticos</h2>
+            <article class="painel">
+                <h2>Modo de preparo</h2>
 
-    <ul>
-        <li>Torre Eiffel</li>
-        <li>Museu do Louvre</li>
-        <li>Arco do Triunfo</li>
-        <li>Catedral de Notre-Dame</li>
-    </ul>
+                <ol>
+                    <li>Bata no liquidificador as cenouras, os ovos e o oleo.</li>
+                    <li>Em uma tigela, misture o creme batido com o acucar e a farinha.</li>
+                    <li>Adicione o fermento e mexa delicadamente.</li>
+                    <li>Despeje em uma forma untada.</li>
+                    <li>Asse em forno preaquecido a 180 graus por cerca de 40 minutos.</li>
+                </ol>
+            </article>
+        </section>
 
-    <h2>Imagens de Paris</h2>
+        <section class="container secao" id="mais-receitas">
+            <div class="secao-cabecalho">
+                <span class="etiqueta">Catalogo</span>
+                <h2>Mais receitas para testar</h2>
+            </div>
 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg" 
-         alt="Torre Eiffel em Paris">
+            <div class="grade-receitas">
+                <article class="receita-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=80"
+                        alt="Prato de macarrao com molho"
+                    >
+                    <div>
+                        <h3>Macarrao ao molho de tomate</h3>
+                        <p>Uma opcao rapida para almoco ou jantar, com molho encorpado e preparo simples.</p>
+                        <span>30 min | Facil</span>
+                    </div>
+                </article>
 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Louvre_Museum_Wikimedia_Commons.jpg" 
-         alt="Museu do Louvre em Paris">
+                <article class="receita-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=80"
+                        alt="Salada colorida em uma tigela"
+                    >
+                    <div>
+                        <h3>Salada colorida</h3>
+                        <p>Leve, fresca e ideal para acompanhar pratos principais ou montar uma refeicao rapida.</p>
+                        <span>15 min | Facil</span>
+                    </div>
+                </article>
 
-    <h2>Links úteis</h2>
+                <article class="receita-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=80"
+                        alt="Fatia de torta doce com frutas"
+                    >
+                    <div>
+                        <h3>Torta doce de frutas</h3>
+                        <p>Sobremesa bonita, cremosa e perfeita para servir em encontros de familia.</p>
+                        <span>1h 10min | Medio</span>
+                    </div>
+                </article>
 
-    <p>
-        <a href="#inicio">Voltar ao início</a>
-    </p>
+                <article class="receita-card">
+                    <img
+                        src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=700&q=80"
+                        alt="Pizza caseira fatiada"
+                    >
+                    <div>
+                        <h3>Pizza caseira</h3>
+                        <p>Massa simples, borda dourada e recheio personalizavel para o fim de semana.</p>
+                        <span>1h 30min | Medio</span>
+                    </div>
+                </article>
+            </div>
+        </section>
 
-    <p>
-        <a href="https://pt.wikipedia.org/wiki/Paris" target="_blank">
-            Saiba mais sobre Paris
-        </a>
-    </p>
+        <section class="container secao" id="dicas">
+            <div class="dica">
+                <h2>Dica do ReceitasHub</h2>
+                <p>
+                    Para uma cobertura mais brilhante no bolo de cenoura, misture chocolate em po,
+                    leite, manteiga e acucar em fogo baixo ate engrossar levemente.
+                </p>
+            </div>
+        </section>
+    </main>
 
+    <footer class="rodape">
+        <p>ReceitasHub - receitas simples para o dia a dia.</p>
+        <a href="#inicio">Voltar ao inicio</a>
+    </footer>
 </body>
 </html>

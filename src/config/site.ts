@@ -7,6 +7,7 @@ export const siteConfig = {
     { label: "Receitas", href: "/receitas" },
     { label: "Categorias", href: "/categorias" },
     { label: "Favoritos", href: "/favoritos" },
+    { label: "Perfil", href: "/perfil" },
     { label: "Entrar", href: "/login" }
   ]
 };

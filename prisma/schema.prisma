@@ -36,13 +36,29 @@ model User {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  accounts  OAuthAccount[]
-  recipes   Recipe[]
-  favorites Favorite[]
-  comments  Comment[]
-  ratings   Rating[]
+  accounts    OAuthAccount[]
+  resetTokens PasswordResetToken[]
+  recipes     Recipe[]
+  favorites   Favorite[]
+  comments    Comment[]
+  ratings     Rating[]
 
   @@map("users")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
 }
 
 model OAuthAccount {
