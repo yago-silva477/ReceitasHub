@@ -239,6 +239,170 @@ li {
     font-weight: 800;
 }
 
+.pagina-login {
+    min-height: 100vh;
+}
+
+.login-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+    min-height: 100vh;
+}
+
+.login-banner {
+    background:
+        linear-gradient(135deg, rgba(217, 67, 39, 0.88), rgba(47, 125, 79, 0.82)),
+        url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80");
+    background-position: center;
+    background-size: cover;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px;
+}
+
+.login-banner .etiqueta,
+.login-banner .logo {
+    color: #ffffff;
+}
+
+.login-logo {
+    width: fit-content;
+}
+
+.login-banner h1 {
+    font-size: 52px;
+    line-height: 1.08;
+    margin: 14px 0 18px;
+    max-width: 640px;
+}
+
+.login-banner p {
+    font-size: 18px;
+    margin: 0;
+    max-width: 560px;
+}
+
+.login-beneficios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.login-beneficios span {
+    background-color: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    font-weight: 800;
+    padding: 8px 14px;
+}
+
+.login-card {
+    align-self: center;
+    background-color: #ffffff;
+    border: 1px solid #f0dfcf;
+    border-radius: 8px;
+    box-shadow: 0 18px 45px rgba(42, 37, 33, 0.12);
+    margin: 32px;
+    padding: 32px;
+}
+
+.login-cabecalho h2 {
+    margin-bottom: 10px;
+}
+
+.login-cabecalho p,
+.cadastro-link {
+    color: #5c524a;
+    margin: 0;
+}
+
+.formulario-login {
+    display: grid;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.formulario-login label {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.formulario-login input[type="email"],
+.formulario-login input[type="password"] {
+    border: 1px solid #e6d5c6;
+    border-radius: 8px;
+    color: #2a2521;
+    font-size: 16px;
+    min-height: 48px;
+    padding: 0 14px;
+    width: 100%;
+}
+
+.formulario-login input:focus {
+    border-color: #d94327;
+    outline: 3px solid rgba(217, 67, 39, 0.16);
+}
+
+.formulario-opcoes {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    margin: 4px 0 8px;
+}
+
+.lembrar {
+    align-items: center;
+    color: #5c524a;
+    display: flex;
+    gap: 8px;
+}
+
+.formulario-opcoes a,
+.cadastro-link a {
+    color: #d94327;
+    font-weight: 800;
+}
+
+.formulario-login button,
+.botao-google {
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    min-height: 48px;
+    width: 100%;
+}
+
+.formulario-login button {
+    background-color: #d94327;
+    border: 0;
+    color: #ffffff;
+}
+
+.formulario-login button:hover {
+    background-color: #b9341f;
+}
+
+.botao-google {
+    background-color: #ffffff;
+    border: 1px solid #e6d5c6;
+    color: #2a2521;
+    margin-top: 12px;
+}
+
+.botao-google:hover {
+    background-color: #eef8f1;
+}
+
+.cadastro-link {
+    margin-top: 20px;
+    text-align: center;
+}
+
 @media (max-width: 900px) {
     .hero-grid,
     .receita-detalhe,
@@ -252,6 +416,20 @@ li {
 
     .hero-texto h1 {
         font-size: 42px;
+    }
+
+    .login-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .login-banner {
+        gap: 36px;
+        min-height: 420px;
+        padding: 32px;
+    }
+
+    .login-banner h1 {
+        font-size: 40px;
     }
 }
 
@@ -276,5 +454,24 @@ li {
 
     .grade-receitas {
         grid-template-columns: 1fr;
+    }
+
+    .login-banner {
+        min-height: auto;
+        padding: 24px;
+    }
+
+    .login-banner h1 {
+        font-size: 32px;
+    }
+
+    .login-card {
+        margin: 16px;
+        padding: 22px;
+    }
+
+    .formulario-opcoes {
+        align-items: flex-start;
+        flex-direction: column;
     }
 }

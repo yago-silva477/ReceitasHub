@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - ReceitasHub</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body class="pagina-login">
+    <main class="login-wrapper">
+        <section class="login-banner">
+            <a class="logo login-logo" href="index.html">ReceitasHub</a>
+
+            <div>
+                <span class="etiqueta">Area do usuario</span>
+                <h1>Entre para salvar suas receitas favoritas.</h1>
+                <p>
+                    Acesse sua conta para favoritar pratos, comentar receitas e montar seu perfil
+                    culinario.
+                </p>
+            </div>
+
+            <div class="login-beneficios">
+                <span>Salvar favoritos</span>
+                <span>Publicar receitas</span>
+                <span>Comentar pratos</span>
+            </div>
+        </section>
+
+        <section class="login-card" aria-labelledby="titulo-login">
+            <div class="login-cabecalho">
+                <span class="etiqueta">Login</span>
+                <h2 id="titulo-login">Bem-vindo de volta</h2>
+                <p>Use seu email e senha para acessar o ReceitasHub.</p>
+            </div>
+
+            <form class="formulario-login" action="#" method="post">
+                <label for="email">Email</label>
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="voce@email.com"
+                    required
+                >
+
+                <label for="senha">Senha</label>
+                <input
+                    id="senha"
+                    name="senha"
+                    type="password"
+                    placeholder="Digite sua senha"
+                    required
+                >
+
+                <div class="formulario-opcoes">
+                    <label class="lembrar">
+                        <input type="checkbox" name="lembrar">
+                        <span>Lembrar de mim</span>
+                    </label>
+
+                    <a href="#">Esqueci a senha</a>
+                </div>
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <button class="botao-google" type="button">Entrar com Google</button>
+
+            <p class="cadastro-link">
+                Ainda nao tem conta?
+                <a href="#">Criar cadastro</a>
+            </p>
+        </section>
+    </main>
+</body>
+</html>
