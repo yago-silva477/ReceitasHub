@@ -4,10 +4,13 @@ import { PageShell } from "@/components/page-shell";
 import { RecipeCard } from "@/components/recipe-card";
 import { SearchPanel } from "@/components/search-panel";
 import { categories, recipes } from "@/data/recipes";
+import { listPublishedRecipeCards } from "@/server/recipes";
 
-export default function Home() {
-  const featured = recipes.slice(0, 3);
-  const heroRecipe = recipes[0];
+export default async function Home() {
+  const dbRecipes = await listPublishedRecipeCards().catch(() => []);
+  const sourceRecipes = dbRecipes.length > 0 ? dbRecipes : recipes;
+  const featured = sourceRecipes.slice(0, 3);
+  const heroRecipe = sourceRecipes[0];
 
   return (
     <PageShell>
@@ -43,14 +46,20 @@ export default function Home() {
           </div>
 
           <article className="overflow-hidden rounded-lg bg-white shadow-soft">
-            <Image
-              src={heroRecipe.imageUrl}
-              alt={heroRecipe.title}
-              width={900}
-              height={675}
-              className="aspect-[4/3] w-full object-cover"
-              priority
-            />
+            {heroRecipe.imageUrl ? (
+              <Image
+                src={heroRecipe.imageUrl}
+                alt={heroRecipe.title}
+                width={900}
+                height={675}
+                className="aspect-[4/3] w-full object-cover"
+                priority
+              />
+            ) : (
+              <div className="grid aspect-[4/3] w-full place-items-center bg-tomato-50 text-3xl font-bold text-tomato-700">
+                ReceitasHub
+              </div>
+            )}
             <div className="p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-tomato-700">
                 Receita em destaque

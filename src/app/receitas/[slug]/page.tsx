@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { RecipeCard } from "@/components/recipe-card";
 import { getRecipeBySlug, recipes } from "@/data/recipes";
+import { getCurrentUser } from "@/lib/auth";
+import { getRecipeWithDetails } from "@/server/recipes";
 
 type RecipePageProps = {
   params: {
@@ -15,8 +17,9 @@ export function generateStaticParams() {
   return recipes.map((recipe) => ({ slug: recipe.slug }));
 }
 
-export function generateMetadata({ params }: RecipePageProps) {
-  const recipe = getRecipeBySlug(params.slug);
+export async function generateMetadata({ params }: RecipePageProps) {
+  const dbRecipe = await getRecipeWithDetails(params.slug).catch(() => null);
+  const recipe = dbRecipe ?? getRecipeBySlug(params.slug);
 
   if (!recipe) {
     return {};
@@ -28,13 +31,50 @@ export function generateMetadata({ params }: RecipePageProps) {
   };
 }
 
-export default function RecipePage({ params }: RecipePageProps) {
-  const recipe = getRecipeBySlug(params.slug);
+export default async function RecipePage({ params }: RecipePageProps) {
+  const dbRecipe = await getRecipeWithDetails(params.slug).catch(() => null);
+  const mockRecipe = getRecipeBySlug(params.slug);
+  const currentUser = await getCurrentUser().catch(() => null);
+  const recipe = dbRecipe
+    ? {
+        id: dbRecipe.id,
+        slug: dbRecipe.slug,
+        title: dbRecipe.title,
+        description: dbRecipe.description,
+        category: dbRecipe.category.name,
+        difficulty: dbRecipe.difficulty,
+        prepTimeMinutes: dbRecipe.prepTimeMinutes,
+        servings: `${dbRecipe.servings} porcoes`,
+        imageUrl: dbRecipe.imageUrl,
+        author: dbRecipe.author.name,
+        authorId: dbRecipe.author.id,
+        ingredients: dbRecipe.ingredients.map((item) =>
+          [item.quantity, item.ingredient.name, item.notes].filter(Boolean).join(" ")
+        ),
+        preparation: dbRecipe.preparation
+          .split(/\r?\n/)
+          .map((step) => step.trim())
+          .filter(Boolean),
+        rating:
+          dbRecipe.ratings.length > 0
+            ? dbRecipe.ratings.reduce((total, rating) => total + rating.score, 0) /
+              dbRecipe.ratings.length
+            : 0
+      }
+    : mockRecipe
+      ? {
+          ...mockRecipe,
+          id: mockRecipe.slug,
+          authorId: null
+        }
+      : null;
 
   if (!recipe) {
     notFound();
   }
 
+  const canEdit =
+    Boolean(dbRecipe) && Boolean(currentUser) && (currentUser?.id === recipe.authorId || currentUser?.role === "ADMIN");
   const related = recipes
     .filter((item) => item.category === recipe.category && item.slug !== recipe.slug)
     .slice(0, 3);
@@ -43,14 +83,20 @@ export default function RecipePage({ params }: RecipePageProps) {
     <PageShell>
       <main>
         <section className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <Image
-            src={recipe.imageUrl}
-            alt={recipe.title}
-            width={900}
-            height={675}
-            className="aspect-[4/3] w-full rounded-lg object-cover shadow-soft"
-            priority
-          />
+          {recipe.imageUrl ? (
+            <Image
+              src={recipe.imageUrl}
+              alt={recipe.title}
+              width={900}
+              height={675}
+              className="aspect-[4/3] w-full rounded-lg object-cover shadow-soft"
+              priority
+            />
+          ) : (
+            <div className="grid aspect-[4/3] w-full place-items-center rounded-lg bg-tomato-50 text-3xl font-bold text-tomato-700 shadow-soft">
+              ReceitasHub
+            </div>
+          )}
 
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-basil-700">
@@ -63,8 +109,17 @@ export default function RecipePage({ params }: RecipePageProps) {
               <Info label="Tempo" value={`${recipe.prepTimeMinutes} min`} />
               <Info label="Rendimento" value={recipe.servings} />
               <Info label="Dificuldade" value={recipe.difficulty} />
-              <Info label="Nota" value={`${recipe.rating}/5`} />
+              <Info label="Nota" value={`${recipe.rating.toFixed(1)}/5`} />
             </div>
+
+            {canEdit ? (
+              <Link
+                href={`/receitas/${recipe.slug}/editar`}
+                className="mt-6 inline-flex min-h-11 items-center rounded-md bg-tomato-600 px-5 font-semibold text-white transition hover:bg-tomato-700"
+              >
+                Editar receita
+              </Link>
+            ) : null}
           </div>
         </section>
 

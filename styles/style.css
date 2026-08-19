@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    background-color: #fff8ef;
+    background-color: #f5e8d8;
     color: #2a2521;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -45,7 +45,7 @@ a {
 }
 
 .logo {
-    color: #d94327;
+    color: #dd7e11;
     font-size: 24px;
     font-weight: 800;
 }
@@ -76,7 +76,7 @@ a {
 }
 
 .hero-texto h1 {
-    color: #d94327;
+    color: #da6f18;
     font-size: 54px;
     line-height: 1.08;
     margin: 12px 0 16px;

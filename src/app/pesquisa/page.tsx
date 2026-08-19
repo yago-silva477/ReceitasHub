@@ -2,6 +2,7 @@ import { PageShell } from "@/components/page-shell";
 import { RecipeCard } from "@/components/recipe-card";
 import { SearchPanel } from "@/components/search-panel";
 import { recipes } from "@/data/recipes";
+import { listPublishedRecipeCards } from "@/server/recipes";
 
 type SearchPageProps = {
   searchParams: {
@@ -10,17 +11,19 @@ type SearchPageProps = {
   };
 };
 
-export default function SearchPage({ searchParams }: SearchPageProps) {
+export default async function SearchPage({ searchParams }: SearchPageProps) {
   const query = searchParams.q?.trim().toLowerCase() ?? "";
   const category = searchParams.categoria?.trim() ?? "";
+  const dbRecipes = await listPublishedRecipeCards().catch(() => []);
+  const sourceRecipes = dbRecipes.length > 0 ? dbRecipes : recipes;
 
-  const results = recipes.filter((recipe) => {
+  const results = sourceRecipes.filter((recipe) => {
     const matchesQuery =
       !query ||
       recipe.title.toLowerCase().includes(query) ||
       recipe.description.toLowerCase().includes(query) ||
-      recipe.ingredients.some((ingredient) => ingredient.toLowerCase().includes(query)) ||
-      recipe.tags.some((tag) => tag.toLowerCase().includes(query));
+      recipe.ingredients?.some((ingredient) => ingredient.toLowerCase().includes(query)) ||
+      recipe.tags?.some((tag) => tag.toLowerCase().includes(query));
 
     const matchesCategory = !category || recipe.category === category;
 

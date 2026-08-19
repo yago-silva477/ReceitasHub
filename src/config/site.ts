@@ -7,6 +7,7 @@ export const siteConfig = {
     { label: "Receitas", href: "/receitas" },
     { label: "Pesquisa", href: "/pesquisa" },
     { label: "Categorias", href: "/categorias" },
+    { label: "Criar receita", href: "/receitas/nova" },
     { label: "Favoritos", href: "/favoritos" },
     { label: "Perfil", href: "/perfil" },
     { label: "Entrar", href: "/login" }
